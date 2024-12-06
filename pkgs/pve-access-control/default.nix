@@ -3,6 +3,7 @@
   stdenv,
   fetchgit,
   perl538,
+  fetchpatch,
   pve-common,
   authenpam,
 }:
@@ -28,6 +29,13 @@ perl538.pkgs.toPerlModule (
     };
 
     sourceRoot = "${src.name}/src";
+    patches = [
+      (fetchpatch {
+        url = "https://github.com/5aaee9/pve-access-control/commit/1db212aa012bc4e314d8f83a806ce3ba8e810e4c.patch";
+        sha256 = "sha256-xf7D3Pqza5RDqKqXGCFgc+YuAZNgPwFROknMGqgvScs=";
+        stripLen = 1;
+      })
+    ];
 
     postPatch = ''
       sed -i Makefile \
